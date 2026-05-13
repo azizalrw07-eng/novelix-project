@@ -1,0 +1,54 @@
+body{
+    background: linear-gradient(135deg, #f8f5ef, #e9dfcf);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+.navbar{
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.page-title{
+    font-weight: bold;
+    color: #2b2118;
+    margin-bottom: 30px;
+}
+
+.card, .book-card, .service-card, .team-card{
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.btn{
+    border-radius: 25px;
+    padding: 8px 22px;
+}
+
+.btn-dark{
+    background: #2b2118;
+}
+
+.btn-success{
+    background: #8b5e34;
+    border: none;
+}
+
+.btn-success:hover{
+    background: #6f4624;
+}
+
+input, textarea{
+    border-radius: 12px !important;
+}
+
+footer, .footer{
+    background: #1f1a17 !important;
+}
+.product-img{
+    width: 150%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

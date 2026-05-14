@@ -71,9 +71,44 @@ function addToCart(name, price){
     localStorage.setItem("cart", JSON.stringify(cart));
     localStorage.setItem("itemsNumber", cart.length);
 
-    window.location.href = "/cart";
+   Swal.fire({
+    title: "Added!",
+    text: "Book added to cart successfully",
+    icon: "success",
+    timer: 1500,
+    showConfirmButton: false
+});
 }
-</script>
+localStorage.setItem("itemsNumber", cart.length);
 
+Swal.fire({
+    title: "Added To Cart!",
+    text: "The book has been added successfully",
+    icon: "success",
+    confirmButtonText: "OK"
+
+
+});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="d-flex justify-content-between mt-5">
+
+    <a href="/home"
+       class="btn btn-secondary">
+
+        ← Previous
+
+    </a>
+
+    <a href="/cart"
+       class="btn btn-dark">
+
+        Next →
+
+    </a>
+
+</div>
 </body>
 </html>

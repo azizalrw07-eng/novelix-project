@@ -87,12 +87,20 @@ function displayCart(){
 
     document.getElementById("total").innerHTML = total;
 }
-
 function removeItem(index){
 
-    cart.splice(index, 1);
+    if(cart[index].quantity > 1){
+
+        cart[index].quantity -= 1;
+    }
+
+    else{
+
+        cart.splice(index, 1);
+    }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+
     localStorage.setItem("itemsNumber", cart.length);
 
     displayCart();
@@ -118,5 +126,22 @@ displayCart();
 
 </script>
 
+<div class="d-flex justify-content-between mt-4">
+
+    <a href="/products"
+       class="btn btn-secondary btn-lg">
+
+        ← Previous
+
+    </a>
+
+    <a href="/buy"
+       class="btn btn-dark btn-lg">
+
+        Next →
+
+    </a>
+
+</div>
 </body>
 </html>

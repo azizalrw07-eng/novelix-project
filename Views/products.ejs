@@ -51,18 +51,28 @@
 
 </div>
 
-
 <script>
-
 function addToCart(name, price){
 
-    localStorage.setItem("bookName", name);
-    localStorage.setItem("bookPrice", price);
-    localStorage.setItem("itemsNumber", 1);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let item = cart.find(product => product.name === name);
+
+    if(item){
+        item.quantity += 1;
+    } else {
+        cart.push({
+            name: name,
+            price: Number(price),
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("itemsNumber", cart.length);
 
     window.location.href = "/cart";
 }
-
 </script>
 
 </body>

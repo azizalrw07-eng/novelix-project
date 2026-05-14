@@ -13,58 +13,37 @@
 
     <h1 class="page-title text-center">My Shopping Cart</h1>
 
-    <div class="row justify-content-center">
+    <div class="card p-4 shadow-lg rounded-4">
 
-        <div class="col-md-8">
+        <table class="table table-hover text-center align-middle">
 
-            <div class="card p-4 shadow-lg rounded-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Book Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
 
-                <table class="table table-hover text-center align-middle">
+            <tbody id="cartBody"></tbody>
 
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Book Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                        </tr>
-                    </thead>
+        </table>
 
-                    <tbody>
+        <div class="text-end mt-4">
+            <h2>
+                Total:
+                <span class="text-success">
+                    <span id="total"></span> SR
+                </span>
+            </h2>
+        </div>
 
-                        <tr>
-                            <td id="bookName"></td>
-                            <td id="bookPrice"></td>
-                            <td>1</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-                <div class="text-end mt-4">
-
-                    <h2>
-                        Total:
-                        <span class="text-success">
-                            <span id="total"></span> SR
-                        </span>
-                    </h2>
-
-                </div>
-
-                <div class="text-center mt-4">
-
-                    <button class="btn btn-success btn-lg"
-                            onclick="checkout()">
-
-                        Checkout
-
-                    </button>
-
-                </div>
-
-            </div>
-
+        <div class="text-center mt-4">
+            <button class="btn btn-success btn-lg" onclick="checkout()">
+                Checkout
+            </button>
         </div>
 
     </div>
@@ -76,38 +55,66 @@
 
 <script>
 
-    let name = localStorage.getItem("bookName");
-    let price = localStorage.getItem("bookPrice");
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cartBody = document.getElementById("cartBody");
+let total = 0;
 
-    document.getElementById("bookName").innerHTML =
-        name || "No Book";
+function displayCart(){
 
-    document.getElementById("bookPrice").innerHTML =
-        price || "0";
+    cartBody.innerHTML = "";
+    total = 0;
 
-    document.getElementById("total").innerHTML =
-        price || "0";
+    cart.forEach(function(item, index){
 
+        let itemTotal = item.price * item.quantity;
+        total += itemTotal;
 
-    function checkout(){
+        cartBody.innerHTML += `
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>${itemTotal}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="removeItem(${index})">
+                        Remove
+                    </button>
+                </td>
+            </tr>
+        `;
 
-        localStorage.setItem("totalPrice", price);
-        localStorage.setItem("itemsNumber", 1);
+    });
 
-        Swal.fire({
-            title: "Success!",
-            text: "Your order has been added successfully",
-            icon: "success",
-            confirmButtonText: "Continue"
-        })
+    document.getElementById("total").innerHTML = total;
+}
 
-        .then(()=>{
+function removeItem(index){
 
-            window.location.href = "/buy";
+    cart.splice(index, 1);
 
-        });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("itemsNumber", cart.length);
 
-    }
+    displayCart();
+}
+
+function checkout(){
+
+    localStorage.setItem("totalPrice", total);
+    localStorage.setItem("itemsNumber", cart.length);
+
+    Swal.fire({
+        title: "Success!",
+        text: "Your order has been added successfully",
+        icon: "success",
+        confirmButtonText: "Continue"
+    }).then(()=>{
+        window.location.href = "/buy";
+    });
+
+}
+
+displayCart();
 
 </script>
 
